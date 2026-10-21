@@ -1,0 +1,17 @@
+import mongoose from "mongoose";
+
+const ticketSchema = new mongoose.Schema(
+    {
+        title: { type: String, required: true, trim: true },
+        description: { type: String, default: "" },
+        status: {
+             type: String,
+            enum: ["open", "in progress", "closed"],
+            default: "open"
+         },
+    },
+    { timestamps: true }
+);
+
+const Ticket = mongoose.model("Ticket", ticketSchema);
+export default Ticket;
