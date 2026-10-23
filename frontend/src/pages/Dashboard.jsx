@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getTickets } from "../services/ticketService";
+import TicketForm from "../components/TicketForm";
 
 function Dashboard() {
     const [tickets, setTickets] = useState([]);
@@ -19,11 +20,22 @@ function Dashboard() {
         }
       loadTickets();  
     }, []);
+
+    async function hancleCreate(ticketData) {
+       try{
+        const newTicket = await createTicket(ticketData);
+        setTickets([newTicket, ...tickets]);
+       }
+       catch (err) {
+        setError(err.message);
+       }
+    }
 if (loading) return <p>Loading tickets...</p>
 if (error) return <p> Error: {error}</p>;
 
 return (
     <div>
+        <TicketForm onCreate={handleCreate} />
         <h2>Tickets ({tickets.length})</h2>
         {tickets.map((ticket) => (
             <div key={ticket._id}>
