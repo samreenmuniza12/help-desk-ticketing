@@ -1,5 +1,5 @@
 import { useState } from "react";
-function TicketForm({ onSubmit }) {
+function TicketForm({ onCreate }) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
 
