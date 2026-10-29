@@ -3,6 +3,11 @@ const statusStyles = {
   "in progress": "bg-amber-100 text-amber-800",
   closed: "bg-slate-200 text-slate-700",
 };
+const priorityStyles = {
+  low: "text-slate-500",
+  medium: "text-amber-500",
+  high: "text-red-500",
+}
 
 function TicketCard({ ticket, onStatusChange, onDelete }) {
   return (
@@ -13,6 +18,9 @@ function TicketCard({ ticket, onStatusChange, onDelete }) {
           {ticket.description && (
             <p className="mt-1 text-sm text-slate-600">{ticket.description}</p>
           )}
+          <p className={`mt-2 text-xs font-medium ${priorityStyles[ticket.priority]}`}>
+            {ticket.priority} priority
+          </p>
         </div>
         <span
           className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${statusStyles[ticket.status]}`}

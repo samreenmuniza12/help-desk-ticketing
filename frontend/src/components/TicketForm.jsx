@@ -3,11 +3,12 @@ import { useState } from "react";
 function TicketForm({ onCreate }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("medium");
 
   async function handleSubmit(e) {
     e.preventDefault();
     if (title.trim() === "") return;
-    await onCreate({ title, description });
+    await onCreate({ title, description, priority });
     setTitle("");
     setDescription("");
   }
@@ -33,6 +34,15 @@ function TicketForm({ onCreate }) {
         rows={3}
         className="mb-3 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
       />
+      <select
+         value={priority}
+         onChange={(e) => setPriority(e.target.value)}
+         className="mb-3 mr-3 rounded-md border border-slate-300 px-3 py-2 text-sm"
+      >
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+      </select>
       <button
         type="submit"
         className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
