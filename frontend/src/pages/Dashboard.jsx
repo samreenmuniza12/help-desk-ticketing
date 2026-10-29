@@ -54,21 +54,25 @@ function Dashboard() {
     }
   }
 
-  if (loading) return <p>Loading tickets...</p>;
-  if (error) return <p>Error: {error}</p>;
+    if (loading) return <p className="text-slate-500">Loading tickets...</p>;
+  if (error) return <p className="text-red-600">Error: {error}</p>;
 
   return (
     <div>
       <TicketForm onCreate={handleCreate} />
-      <h2>Tickets ({tickets.length})</h2>
-      {tickets.map((ticket) => (
-        <TicketCard
-          key={ticket._id}
-          ticket={ticket}
-          onStatusChange={handleStatusChange}
-          onDelete={handleDelete}
-        />
-      ))}
+      <h2 className="mb-4 text-lg font-semibold text-slate-900">
+        Tickets ({tickets.length})
+      </h2>
+      <div className="space-y-3">
+        {tickets.map((ticket) => (
+          <TicketCard
+            key={ticket._id}
+            ticket={ticket}
+            onStatusChange={handleStatusChange}
+            onDelete={handleDelete}
+          />
+        ))}
+      </div>
     </div>
   );
 }
