@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import ticketRoutes from "./routes/tickets.js";
+import authRoutes from "./routes/auth.js";
+import { protect } from "./middleware/auth.js";
 
 dotenv.config();
 
@@ -12,7 +14,9 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use("/api/tickets", ticketRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/tickets", protect, ticketRoutes);
+
 
 app.get("/", (req, res) => {
   res.send("Help desk is running");
