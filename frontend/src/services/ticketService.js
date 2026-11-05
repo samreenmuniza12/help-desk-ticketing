@@ -1,7 +1,18 @@
+import { getToken } from "./authService";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
+function authHeaders() {
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${getToken()}`,
+  };
+}
+
 export async function getTickets() {
-  const response = await fetch(`${API_URL}/tickets`);
+  const response = await fetch(`${API_URL}/tickets`, {
+    headers: authHeaders(),
+  });
   if (!response.ok) {
     throw new Error("Failed to fetch tickets");
   }
@@ -11,7 +22,7 @@ export async function getTickets() {
 export async function createTicket(ticket) {
   const response = await fetch(`${API_URL}/tickets`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeaders(),
     body: JSON.stringify(ticket),
   });
   if (!response.ok) {
@@ -20,23 +31,24 @@ export async function createTicket(ticket) {
   return response.json();
 }
 
-export async function updateTicket(id, ticket) {
+export async function updateTicket(id, updates) {
   const response = await fetch(`${API_URL}/tickets/${id}`, {
     method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(ticket),
+    headers: authHeaders(),
+    body: JSON.stringify(updates),
   });
-  if(!response.ok) {
+  if (!response.ok) {
     throw new Error("Failed to update ticket");
   }
   return response.json();
 }
 
-export async function deleteTicket(id)  {
+export async function deleteTicket(id) {
   const response = await fetch(`${API_URL}/tickets/${id}`, {
     method: "DELETE",
+    headers: authHeaders(),
   });
-  if(!response.ok) {
+  if (!response.ok) {
     throw new Error("Failed to delete ticket");
   }
   return response.json();
